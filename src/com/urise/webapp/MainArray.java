@@ -1,12 +1,17 @@
+package com.urise.webapp;
+
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.ArrayStorage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Test for com.urise.webapp.storage.ArrayStorage
+ * Test for com.com.urise.webapp.storage.com.urise.webapp.storage.ArrayStorage
  */
 public class MainArray {
-    private final static ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private static ArrayStorage arrayStorage = new ArrayStorage();
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -27,23 +32,23 @@ public class MainArray {
                     printAll();
                     break;
                 case "size":
-                    System.out.println(ARRAY_STORAGE.size());
+                    System.out.println(arrayStorage.size());
                     break;
                 case "save":
                     r = new Resume();
-                    r.uuid = uuid;
-                    ARRAY_STORAGE.save(r);
+                    r.setUuid(uuid);
+                    arrayStorage.save(r);
                     printAll();
                     break;
                 case "delete":
-                    ARRAY_STORAGE.delete(uuid);
+                    arrayStorage.delete(uuid);
                     printAll();
                     break;
                 case "get":
-                    System.out.println(ARRAY_STORAGE.get(uuid));
+                    System.out.println(arrayStorage.get(uuid));
                     break;
                 case "clear":
-                    ARRAY_STORAGE.clear();
+                    arrayStorage.clear();
                     printAll();
                     break;
                 case "exit":
@@ -55,8 +60,8 @@ public class MainArray {
         }
     }
 
-    static void printAll() {
-        Resume[] all = ARRAY_STORAGE.getAll();
+    private static void printAll() {
+        Resume[] all = arrayStorage.getAll();
         System.out.println("----------------------------");
         if (all.length == 0) {
             System.out.println("Empty");
