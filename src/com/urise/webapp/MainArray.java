@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Test for com.com.urise.webapp.storage.com.urise.webapp.storage.ArrayStorage
+ * Test com.urise.webapp.storage.ArrayStorage
  */
 public class MainArray {
     private static ArrayStorage arrayStorage = new ArrayStorage();

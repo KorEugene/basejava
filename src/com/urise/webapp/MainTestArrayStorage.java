@@ -4,7 +4,7 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.ArrayStorage;
 
 /**
- * Test for com.com.urise.webapp.storage.com.urise.webapp.storage.ArrayStorage
+ * Test for com.urise.webapp.storage.ArrayStorage
  */
 public class MainTestArrayStorage {
     private static ArrayStorage arrayStorage = new ArrayStorage();
