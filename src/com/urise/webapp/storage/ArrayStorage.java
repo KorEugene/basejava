@@ -7,28 +7,18 @@ import com.urise.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    public void save(Resume r) {
-        if (getIndex(r.getUuid()) != -1) {
-            System.out.println("\n" + "ERROR: the resume is already exist!" + "\n");
-        } else if (size == STORAGE_LIMIT) {
-            System.out.println("\n" + "ERROR: storage is overflow!" + "\n");
-        } else {
-            storage[size] = r;
-            size++;
-        }
+
+    @Override
+    protected void deleteResume(int positionNumber) {
+        storage[positionNumber] = storage[size - 1];
     }
 
-    public void delete(String uuid) {
-        int positionNumber = getIndex(uuid);
-        if (positionNumber == -1) {
-            System.out.println("\n" + "ERROR: the resume doesn't exist!" + "\n");
-        } else {
-            storage[positionNumber] = storage[size - 1];
-            storage[size - 1] = null;
-            size--;
-        }
+    @Override
+    protected void addNewResume(Resume r, int positionNumber) {
+        storage[size] = r;
     }
 
+    @Override
     protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
