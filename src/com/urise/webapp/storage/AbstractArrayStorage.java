@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -20,8 +23,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume r) {
         int positionNumber = getIndex(r.getUuid());
-        if (positionNumber == -1) {
-            System.out.println("\n" + "ERROR: the resume doesn't exist!" + "\n");
+        if (positionNumber < 0) {
+            throw new NotExistStorageException(r.getUuid());
         } else {
             storage[positionNumber] = r;
         }
@@ -29,10 +32,10 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void save(Resume r) {
         int positionNumber = getIndex(r.getUuid());
-        if (positionNumber != -1) {
-            System.out.println("\n" + "ERROR: the resume is already exist!" + "\n");
+        if (positionNumber > 0) {
+            throw new ExistStorageException(r.getUuid());
         } else if (size == STORAGE_LIMIT) {
-            System.out.println("\n" + "ERROR: storage is overflow!" + "\n");
+            throw new StorageException("ERROR: storage is overflow!", r.getUuid());
         } else {
             addNewResume(r, positionNumber);
             size++;
@@ -41,8 +44,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void delete(String uuid) {
         int positionNumber = getIndex(uuid);
-        if (positionNumber == -1) {
-            System.out.println("\n" + "ERROR: the resume doesn't exist!" + "\n");
+        if (positionNumber < 0) {
+            throw new NotExistStorageException(uuid);
         } else {
             deleteResume(positionNumber);
             storage[size - 1] = null;
@@ -64,9 +67,8 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public Resume get(String uuid) {
         int positionNumber = getIndex(uuid);
-        if (positionNumber == -1) {
-            System.out.println("\n" + "ERROR: the resume doesn't exist!" + "\n");
-            return null;
+        if (positionNumber < 0) {
+            throw new NotExistStorageException(uuid);
         }
         return storage[positionNumber];
     }

@@ -9,7 +9,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void deleteResume(int positionNumber) {
-        arraycopy(storage, positionNumber + 1, storage, positionNumber, size - positionNumber - 1);
+        int numMoved = size - positionNumber - 1;
+        if (numMoved > 0) {
+            arraycopy(storage, positionNumber + 1, storage, positionNumber, numMoved);
+        }
     }
 
     @Override
@@ -22,8 +25,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int getIndex(String uuid) {
-        Resume searchKey = new Resume();
-        searchKey.setUuid(uuid);
+        Resume searchKey = new Resume(uuid);
         return binarySearch(storage, 0, size, searchKey);
     }
 }
