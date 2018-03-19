@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MainReflection {
 
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public static void main(String[] args) throws IllegalAccessException, InvocationTargetException {
 
         Resume r = new Resume();
         Field field = r.getClass().getDeclaredFields()[0];
@@ -18,6 +18,6 @@ public class MainReflection {
         System.out.println(r);
 
         // TODO : invoke r.toString via reflection
-        System.out.println(r.getClass().getMethods()[1].invoke(r.getClass().newInstance()));
+        System.out.println("It's time to invoke method \"toString\"!: " + r.getClass().getMethods()[1].invoke(r));
     }
 }

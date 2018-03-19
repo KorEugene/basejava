@@ -7,7 +7,6 @@ import com.urise.webapp.model.Resume;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-
     @Override
     protected void deleteResume(int positionNumber) {
         storage[positionNumber] = storage[size - 1];

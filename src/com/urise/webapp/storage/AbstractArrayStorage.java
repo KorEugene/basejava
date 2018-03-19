@@ -12,9 +12,14 @@ import java.util.Arrays;
  */
 public abstract class AbstractArrayStorage implements Storage {
 
-    protected static final int STORAGE_LIMIT = 10000;
+    private static final int STORAGE_LIMIT = 10000;
+
+    public static int getStorageLimit() {
+        return STORAGE_LIMIT;
+    }
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
+
     protected int size = 0;
 
     public int size() {
