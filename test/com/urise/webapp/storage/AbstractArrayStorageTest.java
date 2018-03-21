@@ -50,30 +50,24 @@ public abstract class AbstractArrayStorageTest {
         assertEquals(R4, storage.get(UUID_4));
     }
 
-    @Test
+    @Test(expected = ExistStorageException.class)
     public void saveAlreadyExist() {
-        try {
-            storage.save(R3);
-        } catch (ExistStorageException e) {
-            assertEquals(ExistStorageException.class, e.getClass());
-            assertEquals("ERROR: the resume " + UUID_3 + " is already exist!", e.getMessage());
-        }
+        storage.save(R3);
         assertEquals(3, storage.size());
         assertEquals(R3, storage.get(UUID_3));
     }
 
-    @Test
+    @Test(expected = StorageException.class)
     public void storageIsOverflow() {
         int limit = AbstractArrayStorage.getStorageLimit();
-        for (int i = 3; i < limit; i++) {
-            storage.save(new Resume());
-        }
         try {
-            storage.save(new Resume());
+            for (int i = 3; i < limit; i++) {
+                storage.save(new Resume());
+            }
         } catch (StorageException e) {
-            assertEquals(StorageException.class, e.getClass());
-            assertEquals("ERROR: storage is overflow!", e.getMessage());
+            fail("ERROR: storage is overflow!");
         }
+        storage.save(new Resume());
         assertEquals(AbstractArrayStorage.getStorageLimit(), storage.size());
     }
 
@@ -81,19 +75,14 @@ public abstract class AbstractArrayStorageTest {
     public void update() {
         Resume r = new Resume("uuid1");
         storage.update(r);
-        assertEquals("uuid1", r.toString());
+        assertEquals(r, storage.get(UUID_1));
         assertEquals(3, storage.size());
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void updateIsNotExist() {
         Resume magicR = new Resume("magic_uuid");
-        try {
-            storage.update(magicR);
-        } catch (NotExistStorageException e) {
-            assertEquals(NotExistStorageException.class, e.getClass());
-            assertEquals("ERROR: the resume " + magicR.toString() + " doesn't exist!", e.getMessage());
-        }
+        storage.update(magicR);
         assertEquals(3, storage.size());
     }
 
@@ -103,14 +92,9 @@ public abstract class AbstractArrayStorageTest {
         assertEquals(2, storage.size());
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void deleteIsNotExist() {
-        try {
-            storage.delete("uuid4");
-        } catch (NotExistStorageException e) {
-            assertEquals(NotExistStorageException.class, e.getClass());
-            assertEquals("ERROR: the resume uuid4 doesn't exist!", e.getMessage());
-        }
+        storage.delete("uuid4");
         assertEquals(3, storage.size());
     }
 
@@ -135,14 +119,9 @@ public abstract class AbstractArrayStorageTest {
         assertEquals(3, storage.size());
     }
 
-    @Test
+    @Test(expected = NotExistStorageException.class)
     public void getIsNotExist() {
-        try {
-            storage.get("uuid4");
-        } catch (NotExistStorageException e) {
-            assertEquals(NotExistStorageException.class, e.getClass());
-            assertEquals("ERROR: the resume uuid4 doesn't exist!", e.getMessage());
-        }
+        storage.get("uuid4");
         assertEquals(3, storage.size());
     }
 }
