@@ -53,8 +53,6 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = ExistStorageException.class)
     public void saveAlreadyExist() {
         storage.save(R3);
-        assertEquals(3, storage.size());
-        assertEquals(R3, storage.get(UUID_3));
     }
 
     @Test(expected = StorageException.class)
@@ -68,7 +66,6 @@ public abstract class AbstractArrayStorageTest {
             fail("ERROR: storage is overflow!");
         }
         storage.save(new Resume());
-        assertEquals(AbstractArrayStorage.getStorageLimit(), storage.size());
     }
 
     @Test
@@ -83,7 +80,6 @@ public abstract class AbstractArrayStorageTest {
     public void updateIsNotExist() {
         Resume magicR = new Resume("magic_uuid");
         storage.update(magicR);
-        assertEquals(3, storage.size());
     }
 
     @Test
@@ -95,7 +91,6 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void deleteIsNotExist() {
         storage.delete("uuid4");
-        assertEquals(3, storage.size());
     }
 
     @Test
@@ -122,6 +117,5 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void getIsNotExist() {
         storage.get("uuid4");
-        assertEquals(3, storage.size());
     }
 }
