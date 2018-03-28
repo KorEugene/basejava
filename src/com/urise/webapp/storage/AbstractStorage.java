@@ -7,18 +7,20 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
-        if (!isExist(r.getUuid())) {
-            throw new NotExistStorageException(r.getUuid());
+        String keyUuid = r.getUuid();
+        if (!isExist(keyUuid)) {
+            throw new NotExistStorageException(keyUuid);
         } else {
-            updateResume(r);
+            updateElement(r, getPositionNumber(keyUuid));
         }
     }
 
     public void save(Resume r) {
-        if (isExist(r.getUuid())) {
-            throw new ExistStorageException(r.getUuid());
+        String keyUuid = r.getUuid();
+        if (isExist(keyUuid)) {
+            throw new ExistStorageException(keyUuid);
         } else {
-            saveResume(r);
+            saveElement(r, getPositionNumber(keyUuid));
         }
     }
 
@@ -26,7 +28,7 @@ public abstract class AbstractStorage implements Storage {
         if (!isExist(uuid)) {
             throw new NotExistStorageException(uuid);
         } else {
-            deleteResume(uuid);
+            deleteElement(getPositionNumber(uuid));
         }
     }
 
@@ -34,20 +36,20 @@ public abstract class AbstractStorage implements Storage {
         if (!isExist(uuid)) {
             throw new NotExistStorageException(uuid);
         }
-        return getResume(uuid);
+        return getElement(getPositionNumber(uuid));
     }
 
-    protected boolean isExist(String uuid) {
-        return getPositionNumber(uuid) > 0;
+    private boolean isExist(String uuid) {
+        return getPositionNumber(uuid) >= 0;
     }
 
-    protected abstract void deleteResume(String uuid);
+    protected abstract void deleteElement(int positionNumber);
 
-    protected abstract void saveResume(Resume r);
+    protected abstract void saveElement(Resume r, int positionNumber);
 
-    protected abstract void updateResume(Resume r);
+    protected abstract void updateElement(Resume r, int positionNumber);
 
-    protected abstract Resume getResume(String uuid);
+    protected abstract Resume getElement(int positionNumber);
 
     protected abstract int getPositionNumber(String uuid);
 }

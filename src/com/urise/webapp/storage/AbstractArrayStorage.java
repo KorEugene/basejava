@@ -12,35 +12,43 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     private static final int STORAGE_LIMIT = 10000;
 
-    public static int getStorageLimit() {
-        return STORAGE_LIMIT;
-    }
-
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
 
     protected int size = 0;
 
-    public int size() {
-        return size;
+    public static int getStorageLimit() {
+        return STORAGE_LIMIT;
     }
 
-    public void updateResume(Resume r) {
-        storage[getPositionNumber(r.getUuid())] = r;
+    @Override
+    public void updateElement(Resume r, int positionNumber) {
+        storage[positionNumber] = r;
     }
 
-    public void saveResume(Resume r) {
+    @Override
+    public void saveElement(Resume r, int positionNumber) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("ERROR: storage is overflow!", r.getUuid());
         } else {
-            addNewResume(r, getPositionNumber(r.getUuid()));
+            addNewResume(r, positionNumber);
             size++;
         }
     }
 
-    public void deleteResume(String uuid) {
-        deleteResume(getPositionNumber(uuid));
+    @Override
+    public void deleteElement(int positionNumber) {
+        deleteResume(positionNumber);
         storage[size - 1] = null;
         size--;
+    }
+
+    @Override
+    public Resume getElement(int positionNumber) {
+        return storage[positionNumber];
+    }
+
+    public int size() {
+        return size;
     }
 
     /**
@@ -53,10 +61,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    public Resume getResume(String uuid) {
-        return storage[getPositionNumber(uuid)];
     }
 
     protected abstract void deleteResume(int positionNumber);

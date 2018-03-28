@@ -4,7 +4,9 @@ import com.urise.webapp.model.Resume;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 
 public class MainCollections {
@@ -33,6 +35,13 @@ public class MainCollections {
             }
         }
         System.out.println(collection.toString());
+        Map<String, Resume> map = new HashMap<>();
+        map.put(UUID_1, R1);
+        map.put(UUID_2, R2);
+        map.put(UUID_3, R3);
+        for (Map.Entry<String, Resume> entry : map.entrySet()) {
+            System.out.println(entry.getValue());
+        }
     }
 
 }
