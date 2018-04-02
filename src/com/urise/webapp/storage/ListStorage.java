@@ -11,17 +11,17 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void deleteElement(int positionNumber) {
-
+        storageList.remove(positionNumber);
     }
 
     @Override
     protected void saveElement(Resume r, int positionNumber) {
-
+        storageList.add(r);
     }
 
     @Override
     protected void updateElement(Resume r, int positionNumber) {
-
+        storageList.set(positionNumber, r);
     }
 
     @Override
@@ -41,16 +41,16 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void clear() {
-
+        storageList.clear();
     }
 
     @Override
     public Resume[] getAll() {
-        return new Resume[0];
+        return storageList.toArray(new Resume[storageList.size()]);
     }
 
     @Override
     public int size() {
-        return 0;
+        return storageList.size();
     }
 }
