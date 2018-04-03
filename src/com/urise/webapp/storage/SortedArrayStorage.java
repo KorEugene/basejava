@@ -24,8 +24,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected int getPositionNumber(String uuid) {
-        Resume searchKey = new Resume(uuid);
+    protected Object getPositionNumber(Object o) {
+        Resume searchKey = new Resume((String) o);
         return binarySearch(storage, 0, size, searchKey);
     }
 }

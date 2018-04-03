@@ -8,7 +8,7 @@ public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
         String keyUuid = r.getUuid();
-        if (!isExist(keyUuid)) {
+        if ((Integer) getPositionNumber(keyUuid) < 0) {
             throw new NotExistStorageException(keyUuid);
         } else {
             updateElement(r, getPositionNumber(keyUuid));
@@ -17,7 +17,7 @@ public abstract class AbstractStorage implements Storage {
 
     public void save(Resume r) {
         String keyUuid = r.getUuid();
-        if (isExist(keyUuid)) {
+        if ((Integer) getPositionNumber(keyUuid) > 0) {
             throw new ExistStorageException(keyUuid);
         } else {
             saveElement(r, getPositionNumber(keyUuid));
@@ -25,7 +25,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void delete(String uuid) {
-        if (!isExist(uuid)) {
+        if ((Integer) getPositionNumber(uuid) < 0) {
             throw new NotExistStorageException(uuid);
         } else {
             deleteElement(getPositionNumber(uuid));
@@ -33,23 +33,23 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        if (!isExist(uuid)) {
+        if ((Integer) getPositionNumber(uuid) < 0) {
             throw new NotExistStorageException(uuid);
         }
         return getElement(getPositionNumber(uuid));
     }
 
-    private boolean isExist(String uuid) {
-        return getPositionNumber(uuid) >= 0;
-    }
+//    private boolean isExist(Object o) {
+//        return getPositionNumber(o) >= 0;
+//    }
 
-    protected abstract void deleteElement(int positionNumber);
+    protected abstract void deleteElement(Object positionNumber);
 
-    protected abstract void saveElement(Resume r, int positionNumber);
+    protected abstract void saveElement(Resume r, Object positionNumber);
 
-    protected abstract void updateElement(Resume r, int positionNumber);
+    protected abstract void updateElement(Resume r, Object positionNumber);
 
-    protected abstract Resume getElement(int positionNumber);
+    protected abstract Resume getElement(Object positionNumber);
 
-    protected abstract int getPositionNumber(String uuid);
+    protected abstract Object getPositionNumber(Object o);
 }

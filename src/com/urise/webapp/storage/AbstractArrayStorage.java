@@ -21,30 +21,30 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void updateElement(Resume r, int positionNumber) {
-        storage[positionNumber] = r;
+    public void updateElement(Resume r, Object positionNumber) {
+        storage[(int) positionNumber] = r;
     }
 
     @Override
-    public void saveElement(Resume r, int positionNumber) {
+    public void saveElement(Resume r, Object positionNumber) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("ERROR: storage is overflow!", r.getUuid());
         } else {
-            addNewResume(r, positionNumber);
+            addNewResume(r, (Integer) positionNumber);
             size++;
         }
     }
 
     @Override
-    public void deleteElement(int positionNumber) {
-        deleteResume(positionNumber);
+    public void deleteElement(Object positionNumber) {
+        deleteResume((Integer) positionNumber);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public Resume getElement(int positionNumber) {
-        return storage[positionNumber];
+    public Resume getElement(Object positionNumber) {
+        return storage[(int) positionNumber];
     }
 
     public int size() {
