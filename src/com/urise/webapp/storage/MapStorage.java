@@ -30,8 +30,8 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getPositionNumber(Object o) {
-        return 0;
+    protected Object getPositionNumber(String uuid) {
+        return null;
     }
 
     @Override
@@ -47,5 +47,10 @@ public class MapStorage extends AbstractStorage {
     @Override
     public int size() {
         return 0;
+    }
+
+    @Override
+    protected boolean isExist(Object keyUuid) {
+        return false;
     }
 }

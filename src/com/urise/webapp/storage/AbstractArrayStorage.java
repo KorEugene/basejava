@@ -44,7 +44,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public Resume getElement(Object keyUuid) {
-        return storage[(int) keyUuid];
+        return storage[(Integer) keyUuid];
     }
 
     public int size() {
@@ -61,6 +61,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
+    }
+
+    @Override
+    protected boolean isExist(Object keyUuid) {
+        return (Integer) keyUuid >= 0;
     }
 
     protected abstract void deleteResume(int positionNumber);

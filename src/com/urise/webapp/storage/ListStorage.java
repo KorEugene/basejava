@@ -11,7 +11,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void deleteElement(Object positionNumber) {
-        storageList.remove(positionNumber);
+        storageList.remove(((Integer) (positionNumber)).intValue());
     }
 
     @Override
@@ -30,9 +30,9 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getPositionNumber(Object o) {
+    protected Object getPositionNumber(String uuid) {
         for (int i = 0; i < storageList.size(); i++) {
-            if (storageList.get(i).getUuid().equals(o)) {
+            if (storageList.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
@@ -52,5 +52,10 @@ public class ListStorage extends AbstractStorage {
     @Override
     public int size() {
         return storageList.size();
+    }
+
+    @Override
+    protected boolean isExist(Object keyUuid) {
+        return (Integer) keyUuid != -1;
     }
 }
