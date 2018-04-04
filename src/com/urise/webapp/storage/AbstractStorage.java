@@ -7,49 +7,49 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
-        String keyUuid = r.getUuid();
-        if ((Integer) getPositionNumber(keyUuid) < 0) {
-            throw new NotExistStorageException(keyUuid);
+        Object keyUuid = getPositionNumber(r.getUuid());
+        if (!isExist(keyUuid)) {
+            throw new NotExistStorageException(r.getUuid());
         } else {
-            updateElement(r, getPositionNumber(keyUuid));
+            updateElement(r, keyUuid);
         }
     }
 
     public void save(Resume r) {
-        String keyUuid = r.getUuid();
-        if ((Integer) getPositionNumber(keyUuid) > 0) {
-            throw new ExistStorageException(keyUuid);
+        Object keyUuid = getPositionNumber(r.getUuid());
+        if (isExist(keyUuid)) {
+            throw new ExistStorageException(r.getUuid());
         } else {
-            saveElement(r, getPositionNumber(keyUuid));
+            saveElement(r, keyUuid);
         }
     }
 
     public void delete(String uuid) {
-        if ((Integer) getPositionNumber(uuid) < 0) {
+        Object keyUuid = getPositionNumber(uuid);
+        if (!isExist(keyUuid)) {
             throw new NotExistStorageException(uuid);
         } else {
-            deleteElement(getPositionNumber(uuid));
+            deleteElement(keyUuid);
         }
     }
 
     public Resume get(String uuid) {
-        if ((Integer) getPositionNumber(uuid) < 0) {
+        Object keyUuid = getPositionNumber(uuid);
+        if (!isExist(keyUuid)) {
             throw new NotExistStorageException(uuid);
         }
-        return getElement(getPositionNumber(uuid));
+        return getElement(keyUuid);
     }
 
-//    private boolean isExist(Object o) {
-//        return getPositionNumber(o) >= 0;
-//    }
+    protected abstract boolean isExist(Object keyUuid);
 
-    protected abstract void deleteElement(Object positionNumber);
+    protected abstract void deleteElement(Object keyUuid);
 
-    protected abstract void saveElement(Resume r, Object positionNumber);
+    protected abstract void saveElement(Resume r, Object keyUuid);
 
-    protected abstract void updateElement(Resume r, Object positionNumber);
+    protected abstract void updateElement(Resume r, Object keyUuid);
 
-    protected abstract Resume getElement(Object positionNumber);
+    protected abstract Resume getElement(Object keyUuid);
 
-    protected abstract Object getPositionNumber(Object o);
+    protected abstract Object getPositionNumber(String uuid);
 }

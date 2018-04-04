@@ -18,9 +18,9 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected Object getPositionNumber(Object o) {
+    protected Integer getPositionNumber(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (o.equals(storage[i].getUuid())) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
