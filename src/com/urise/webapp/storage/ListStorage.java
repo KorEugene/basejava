@@ -10,27 +10,27 @@ public class ListStorage extends AbstractStorage {
     private List<Resume> storageList = new ArrayList<>();
 
     @Override
-    protected void deleteElement(Object positionNumber) {
-        storageList.remove(((Integer) (positionNumber)).intValue());
+    protected void deleteElement(Object keyUuid) {
+        storageList.remove(((Integer) (keyUuid)).intValue());
     }
 
     @Override
-    protected void saveElement(Resume r, Object positionNumber) {
+    protected void saveElement(Resume r, Object keyUuid) {
         storageList.add(r);
     }
 
     @Override
-    protected void updateElement(Resume r, Object positionNumber) {
-        storageList.set((Integer) positionNumber, r);
+    protected void updateElement(Resume r, Object keyUuid) {
+        storageList.set((Integer) keyUuid, r);
     }
 
     @Override
-    protected Resume getElement(Object positionNumber) {
-        return storageList.get((Integer) positionNumber);
+    protected Resume getElement(Object keyUuid) {
+        return storageList.get((Integer) keyUuid);
     }
 
     @Override
-    protected Object getPositionNumber(String uuid) {
+    protected Object getKeyByUuid(String uuid) {
         for (int i = 0; i < storageList.size(); i++) {
             if (storageList.get(i).getUuid().equals(uuid)) {
                 return i;

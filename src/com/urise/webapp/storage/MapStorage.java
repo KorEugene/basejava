@@ -10,27 +10,27 @@ public class MapStorage extends AbstractStorage {
     Map<String, Resume> map = new HashMap<>();
 
     @Override
-    protected void deleteElement(Object positionNumber) {
+    protected void deleteElement(Object keyUuid) {
 
     }
 
     @Override
-    protected void saveElement(Resume r, Object positionNumber) {
+    protected void saveElement(Resume r, Object keyUuid) {
 
     }
 
     @Override
-    protected void updateElement(Resume r, Object positionNumber) {
+    protected void updateElement(Resume r, Object keyUuid) {
 
     }
 
     @Override
-    protected Resume getElement(Object positionNumber) {
+    protected Resume getElement(Object keyUuid) {
         return null;
     }
 
     @Override
-    protected Object getPositionNumber(String uuid) {
+    protected Object getKeyByUuid(String uuid) {
         return null;
     }
 

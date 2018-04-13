@@ -8,23 +8,23 @@ import static java.util.Arrays.binarySearch;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void deleteResume(int positionNumber) {
-        int numMoved = size - positionNumber - 1;
+    protected void deleteResume(int keyUuid) {
+        int numMoved = size - keyUuid - 1;
         if (numMoved > 0) {
-            arraycopy(storage, positionNumber + 1, storage, positionNumber, numMoved);
+            arraycopy(storage, keyUuid + 1, storage, keyUuid, numMoved);
         }
     }
 
     @Override
-    protected void addNewResume(Resume r, int positionNumber) {
-        positionNumber = (positionNumber + 1) * -1;
+    protected void addNewResume(Resume r, int keyUuid) {
+        keyUuid = (keyUuid + 1) * -1;
         // because by default storage is empty i have to use storage.length instead of size or outOfBoundException
-        arraycopy(storage, positionNumber, storage, positionNumber + 1, storage.length - positionNumber - 1);
-        storage[positionNumber] = r;
+        arraycopy(storage, keyUuid, storage, keyUuid + 1, storage.length - keyUuid - 1);
+        storage[keyUuid] = r;
     }
 
     @Override
-    protected Object getPositionNumber(String uuid) {
+    protected Object getKeyByUuid(String uuid) {
         Resume searchKey = new Resume(uuid);
         return binarySearch(storage, 0, size, searchKey);
     }

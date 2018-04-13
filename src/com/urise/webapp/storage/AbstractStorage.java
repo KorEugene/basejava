@@ -7,7 +7,7 @@ import com.urise.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public void update(Resume r) {
-        Object keyUuid = getPositionNumber(r.getUuid());
+        Object keyUuid = getKeyByUuid(r.getUuid());
         if (!isExist(keyUuid)) {
             throw new NotExistStorageException(r.getUuid());
         } else {
@@ -16,7 +16,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void save(Resume r) {
-        Object keyUuid = getPositionNumber(r.getUuid());
+        Object keyUuid = getKeyByUuid(r.getUuid());
         if (isExist(keyUuid)) {
             throw new ExistStorageException(r.getUuid());
         } else {
@@ -25,7 +25,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void delete(String uuid) {
-        Object keyUuid = getPositionNumber(uuid);
+        Object keyUuid = getKeyByUuid(uuid);
         if (!isExist(keyUuid)) {
             throw new NotExistStorageException(uuid);
         } else {
@@ -34,7 +34,7 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        Object keyUuid = getPositionNumber(uuid);
+        Object keyUuid = getKeyByUuid(uuid);
         if (!isExist(keyUuid)) {
             throw new NotExistStorageException(uuid);
         }
@@ -51,5 +51,5 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume getElement(Object keyUuid);
 
-    protected abstract Object getPositionNumber(String uuid);
+    protected abstract Object getKeyByUuid(String uuid);
 }

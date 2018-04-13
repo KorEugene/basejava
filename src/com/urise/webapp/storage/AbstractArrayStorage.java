@@ -68,8 +68,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return (Integer) keyUuid >= 0;
     }
 
-    protected abstract void deleteResume(int positionNumber);
+    protected abstract void deleteResume(int keyUuid);
 
-    protected abstract void addNewResume(Resume r, int positionNumber);
+    protected abstract void addNewResume(Resume r, int keyUuid);
 
 }
