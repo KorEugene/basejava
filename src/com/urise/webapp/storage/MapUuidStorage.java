@@ -2,6 +2,8 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +34,7 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected Object getKeyByUuid(String uuid) {
-        return null;
+        return uuid;
     }
 
     @Override
@@ -42,7 +44,9 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return null;
+        List<Resume> list = new ArrayList<>(map.values());
+        Collections.sort(list);
+        return list;
     }
 
     @Override
@@ -52,6 +56,6 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object keyUuid) {
-        return (Integer) keyUuid != -1;
+        return map.containsKey(keyUuid);
     }
 }
