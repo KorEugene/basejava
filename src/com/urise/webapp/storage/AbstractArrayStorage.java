@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
 
     private static final int STORAGE_LIMIT = 10000;
 
@@ -17,35 +17,39 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected int size = 0;
 
+    protected abstract void deleteResume(int keyUuid);
+
+    protected abstract void addNewResume(Resume r, int keyUuid);
+
     public static int getStorageLimit() {
         return STORAGE_LIMIT;
     }
 
     @Override
-    public void updateElement(Resume r, Object keyUuid) {
-        storage[(Integer) keyUuid] = r;
+    public void updateElement(Resume r, Integer keyUuid) {
+        storage[keyUuid] = r;
     }
 
     @Override
-    public void saveElement(Resume r, Object keyUuid) {
+    public void saveElement(Resume r, Integer keyUuid) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("ERROR: storage is overflow!", r.getUuid());
         } else {
-            addNewResume(r, (Integer) keyUuid);
+            addNewResume(r, keyUuid);
             size++;
         }
     }
 
     @Override
-    public void deleteElement(Object keyUuid) {
-        deleteResume((Integer) keyUuid);
+    public void deleteElement(Integer keyUuid) {
+        deleteResume(keyUuid);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    public Resume getElement(Object keyUuid) {
-        return storage[(Integer) keyUuid];
+    public Resume getElement(Integer keyUuid) {
+        return storage[keyUuid];
     }
 
     @Override
@@ -54,7 +58,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> sortElements() {
+    public List<Resume> copyElements() {
         Resume[] copyOfArray = Arrays.copyOfRange(storage, 0, size);
         return Arrays.asList(copyOfArray);
     }
@@ -66,11 +70,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object keyUuid) {
-        return (Integer) keyUuid >= 0;
+    protected boolean isExist(Integer keyUuid) {
+        return keyUuid >= 0;
     }
-
-    protected abstract void deleteResume(int keyUuid);
-
-    protected abstract void addNewResume(Resume r, int keyUuid);
 }

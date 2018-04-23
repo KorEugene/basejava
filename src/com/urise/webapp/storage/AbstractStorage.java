@@ -6,12 +6,31 @@ import com.urise.webapp.model.Resume;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
+
+    private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
+
+    protected abstract boolean isExist(SK keyUuid);
+
+    protected abstract void deleteElement(SK keyUuid);
+
+    protected abstract void saveElement(Resume r, SK keyUuid);
+
+    protected abstract void updateElement(Resume r, SK keyUuid);
+
+    protected abstract Resume getElement(SK keyUuid);
+
+    protected abstract SK getKeyByUuid(String uuid);
+
+    protected abstract List<Resume> copyElements();
 
     public void update(Resume r) {
-        Object keyUuid = getKeyByUuid(r.getUuid());
+        LOG.info("Update " + r);
+        SK keyUuid = getKeyByUuid(r.getUuid());
         if (!isExist(keyUuid)) {
+            LOG.warning("ERROR: the resume " + r + " doesn't exist!");
             throw new NotExistStorageException(r.getUuid());
         } else {
             updateElement(r, keyUuid);
@@ -19,8 +38,10 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void save(Resume r) {
-        Object keyUuid = getKeyByUuid(r.getUuid());
+        LOG.info("Save " + r);
+        SK keyUuid = getKeyByUuid(r.getUuid());
         if (isExist(keyUuid)) {
+            LOG.warning("ERROR: the resume " + r + " is already exist!");
             throw new ExistStorageException(r.getUuid());
         } else {
             saveElement(r, keyUuid);
@@ -28,8 +49,10 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void delete(String uuid) {
-        Object keyUuid = getKeyByUuid(uuid);
+        LOG.info("Delete " + uuid);
+        SK keyUuid = getKeyByUuid(uuid);
         if (!isExist(keyUuid)) {
+            LOG.warning("ERROR: the resume " + uuid + " doesn't exist!");
             throw new NotExistStorageException(uuid);
         } else {
             deleteElement(keyUuid);
@@ -37,8 +60,10 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public Resume get(String uuid) {
-        Object keyUuid = getKeyByUuid(uuid);
+        LOG.info("Get " + uuid);
+        SK keyUuid = getKeyByUuid(uuid);
         if (!isExist(keyUuid)) {
+            LOG.warning("ERROR: the resume " + uuid + " doesn't exist!");
             throw new NotExistStorageException(uuid);
         }
         return getElement(keyUuid);
@@ -48,22 +73,9 @@ public abstract class AbstractStorage implements Storage {
      * @return array, contains only Resumes in storage (without null)
      */
     public List<Resume> getAllSorted() {
-        List<Resume> sortedList = sortElements();
+        LOG.info("getAllSorted");
+        List<Resume> sortedList = copyElements();
         Collections.sort(sortedList);
         return sortedList;
     }
-
-    protected abstract boolean isExist(Object keyUuid);
-
-    protected abstract void deleteElement(Object keyUuid);
-
-    protected abstract void saveElement(Resume r, Object keyUuid);
-
-    protected abstract void updateElement(Resume r, Object keyUuid);
-
-    protected abstract Resume getElement(Object keyUuid);
-
-    protected abstract Object getKeyByUuid(String uuid);
-
-    protected abstract List<Resume> sortElements();
 }

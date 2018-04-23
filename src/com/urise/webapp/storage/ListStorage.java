@@ -5,28 +5,28 @@ import com.urise.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage extends AbstractStorage {
+public class ListStorage extends AbstractStorage<Integer> {
 
     private List<Resume> storageList = new ArrayList<>();
 
     @Override
-    protected void deleteElement(Object keyUuid) {
-        storageList.remove(((Integer) (keyUuid)).intValue());
+    protected void deleteElement(Integer keyUuid) {
+        storageList.remove(keyUuid.intValue());
     }
 
     @Override
-    protected void saveElement(Resume r, Object keyUuid) {
+    protected void saveElement(Resume r, Integer keyUuid) {
         storageList.add(r);
     }
 
     @Override
-    protected void updateElement(Resume r, Object keyUuid) {
-        storageList.set((Integer) keyUuid, r);
+    protected void updateElement(Resume r, Integer keyUuid) {
+        storageList.set(keyUuid, r);
     }
 
     @Override
-    protected Resume getElement(Object keyUuid) {
-        return storageList.get((Integer) keyUuid);
+    protected Resume getElement(Integer keyUuid) {
+        return storageList.get(keyUuid);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> sortElements() {
+    public List<Resume> copyElements() {
         return new ArrayList<>(storageList);
     }
 
@@ -55,7 +55,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object keyUuid) {
-        return (Integer) keyUuid != -1;
+    protected boolean isExist(Integer keyUuid) {
+        return keyUuid != -1;
     }
 }

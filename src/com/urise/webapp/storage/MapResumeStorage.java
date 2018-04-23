@@ -7,33 +7,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MapUuidStorage extends AbstractStorage<String> {
+public class MapResumeStorage extends AbstractStorage<Resume> {
 
     private Map<String, Resume> map = new HashMap<>();
 
     @Override
-    protected void deleteElement(String keyUuid) {
-        map.remove(keyUuid);
+    protected void deleteElement(Resume resume) {
+        map.remove(resume.getUuid());
     }
 
     @Override
-    protected void saveElement(Resume r, String keyUuid) {
-        map.put(keyUuid, r);
+    protected void saveElement(Resume r, Resume resume) {
+        map.put(r.getUuid(), r);
     }
 
     @Override
-    protected void updateElement(Resume r, String keyUuid) {
-        map.replace(keyUuid, r);
+    protected void updateElement(Resume r, Resume resume) {
+        map.replace(r.getUuid(), r);
     }
 
     @Override
-    protected Resume getElement(String keyUuid) {
-        return map.get(keyUuid);
+    protected Resume getElement(Resume resume) {
+        return resume;
     }
 
     @Override
-    protected String getKeyByUuid(String uuid) {
-        return uuid;
+    protected Resume getKeyByUuid(String uuid) {
+        return map.get(uuid);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MapUuidStorage extends AbstractStorage<String> {
     }
 
     @Override
-    protected boolean isExist(String keyUuid) {
-        return map.containsKey(keyUuid);
+    protected boolean isExist(Resume resume) {
+        return resume != null;
     }
 }
