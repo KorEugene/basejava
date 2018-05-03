@@ -18,4 +18,19 @@ public class ListSection extends Section {
     public String toString() {
         return elementsOfSection.toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ListSection that = (ListSection) o;
+
+        return elementsOfSection.equals(that.elementsOfSection);
+    }
+
+    @Override
+    public int hashCode() {
+        return elementsOfSection.hashCode();
+    }
 }
