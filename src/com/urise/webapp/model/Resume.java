@@ -18,11 +18,19 @@ public class Resume implements Comparable<Resume> {
 
     private final Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, Section> getSections() {
+        return sections;
+    }
+
     public String getContact(ContactType type) {
         return contacts.get(type);
     }
 
-    public Section getSections(SectionType type) {
+    public Section getSection(SectionType type) {
         return sections.get(type);
     }
 
