@@ -1,10 +1,13 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 public class StringSection extends Section {
 
     private final String content;
 
     public StringSection(String content) {
+        Objects.requireNonNull(content, "content must not be null");
         this.content = content;
     }
 

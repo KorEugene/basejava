@@ -1,5 +1,7 @@
 package com.urise.webapp.model;
 
+import java.util.Objects;
+
 public class HyperLink {
 
     private final String title;
@@ -7,6 +9,7 @@ public class HyperLink {
     private final String url;
 
     public HyperLink(String title, String url) {
+        Objects.requireNonNull(title, "title must not be null");
         this.title = title;
         this.url = url;
     }
