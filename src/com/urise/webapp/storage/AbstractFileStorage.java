@@ -26,6 +26,8 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     protected abstract void writeElement(Resume r, File file) throws IOException;
 
+    protected abstract Resume readElement(File file) throws IOException;
+
     @Override
     protected boolean isExist(File file) {
         return file.exists();
@@ -33,27 +35,37 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void deleteElement(File file) {
-
+        if (!file.delete()) {
+            throw new StorageException("File delete error", file.getName());
+        }
     }
 
     @Override
     protected void saveElement(Resume r, File file) {
         try {
             file.createNewFile();
-            writeElement(r, file);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Couldn't create file " + file.getAbsolutePath(), file.getName(), e);
         }
+        updateElement(r, file);
     }
 
     @Override
     protected void updateElement(Resume r, File file) {
-
+        try {
+            writeElement(r, file);
+        } catch (IOException e) {
+            throw new StorageException("File write error", r.getUuid(), e);
+        }
     }
 
     @Override
     protected Resume getElement(File file) {
-        return null;
+        try {
+            return readElement(file);
+        } catch (IOException e) {
+            throw new StorageException("File read error ", file.getName(), e);
+        }
     }
 
     @Override
@@ -63,16 +75,33 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> copyElements() {
-        return null;
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Directory read error ", null);
+        }
+        List<Resume> list = new ArrayList<>(files.length);
+        for (File file : files) {
+            list.add(getElement(file));
+        }
+        return list;
     }
 
     @Override
     public void clear() {
-
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                deleteElement(file);
+            }
+        }
     }
 
     @Override
     public int size() {
-        return 0;
+        String[] list = directory.list();
+        if (list == null) {
+            throw new StorageException("Directory read error", null);
+        }
+        return list.length;
     }
 }
