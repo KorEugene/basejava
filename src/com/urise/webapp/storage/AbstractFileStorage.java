@@ -3,8 +3,14 @@ package com.urise.webapp.storage;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,9 +30,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         this.directory = directory;
     }
 
-    protected abstract void writeElement(Resume r, File file) throws IOException;
+    protected abstract void writeElement(Resume r, OutputStream file) throws IOException;
 
-    protected abstract Resume readElement(File file) throws IOException;
+    protected abstract Resume readElement(InputStream file) throws IOException;
 
     @Override
     protected boolean isExist(File file) {
@@ -53,7 +59,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void updateElement(Resume r, File file) {
         try {
-            writeElement(r, file);
+            writeElement(r, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File write error", r.getUuid(), e);
         }
@@ -62,7 +68,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getElement(File file) {
         try {
-            return readElement(file);
+            return readElement(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File read error ", file.getName(), e);
         }
