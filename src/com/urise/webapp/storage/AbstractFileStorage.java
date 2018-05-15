@@ -30,9 +30,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         this.directory = directory;
     }
 
-    protected abstract void writeElement(Resume r, OutputStream file) throws IOException;
+    protected abstract void writeElement(Resume r, OutputStream os) throws IOException;
 
-    protected abstract Resume readElement(InputStream file) throws IOException;
+    protected abstract Resume readElement(InputStream is) throws IOException;
 
     @Override
     protected boolean isExist(File file) {

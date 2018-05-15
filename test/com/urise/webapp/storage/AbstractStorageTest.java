@@ -13,12 +13,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.time.Month;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 public class AbstractStorageTest {
+
+    protected static final File STORAGE_DIR = new File("C:\\Users\\Master\\basejava\\storage");
 
     protected Storage storage;
 
