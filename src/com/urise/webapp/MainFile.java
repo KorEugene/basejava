@@ -41,19 +41,19 @@ public class MainFile {
         }
 
         System.out.println("\n" + "Recursion!");
-        printDirectoryDeeply(dir);
+        printDirectoryDeeply(dir, "");
     }
 
-    public static void printDirectoryDeeply(File dir) {
+    public static void printDirectoryDeeply(File dir, String offset) {
 
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile()) {
-                    System.out.println("File: " + file.getName());
+                    System.out.println(offset + "File: " + file.getName());
                 } else if (file.isDirectory()) {
-                    System.out.println("Directory: " + file.getName());
-                    printDirectoryDeeply(file);
+                    System.out.println(offset + "Directory: " + file.getName());
+                    printDirectoryDeeply(file, offset + " ");
                 }
             }
         }
