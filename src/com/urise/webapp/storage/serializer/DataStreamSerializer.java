@@ -23,6 +23,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             }
+
             // TODO implements sections
         }
     }
@@ -37,6 +38,7 @@ public class DataStreamSerializer implements StreamSerializer {
             for (int i = 0; i < size; i++) {
                 resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
+
             // TODO implements sections
             return resume;
         }
