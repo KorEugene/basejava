@@ -1,18 +1,15 @@
 package com.urise.webapp;
 
-import com.urise.webapp.util.LazySingleton;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainConcurrency {
 
-    private static final Object LOCK = new Object();
     public static final int THREADS_NUMBER = 10000;
 
     private static int counter;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         System.out.println(Thread.currentThread().getName());
 
@@ -37,10 +34,8 @@ public class MainConcurrency {
                 }
             });
             thread.start();
-//            thread.join();
             threads.add(thread);
         }
-//        Thread.sleep(500);
         threads.forEach((t -> {
             try {
                 t.join();
@@ -51,19 +46,7 @@ public class MainConcurrency {
         System.out.println(counter);
     }
 
-//    private static synchronized void inc() {
-//        double a = Math.sin(13.);
-//        counter++;
-//    }
-
-//    private static void inc() {
-//        double a = Math.sin(13.);
-//        synchronized (LOCK) {
-//            counter++;
-//        }
-
     private synchronized void inc() {
-//        synchronized (this) {
         counter++;
     }
 
