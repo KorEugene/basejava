@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -43,8 +44,8 @@ public class AbstractStorageTest {
 
         R1.addContact(ContactType.E_MAIL, "mail1@ya.ru");
         R1.addContact(ContactType.PHONE_NUMBER, "11111");
-        R1.addSection(SectionType.OBJECTIVE, new StringSection("Objective1"));
         R1.addSection(SectionType.PERSONAL, new StringSection("Personal data"));
+        R1.addSection(SectionType.OBJECTIVE, new StringSection("Objective1"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
         R1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
         R1.addSection(SectionType.EXPERIENCE,
@@ -123,6 +124,9 @@ public class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
+        /*List<Resume> list = storage.getAllSorted();
+        assertEquals(3, list.size());
+        assertEquals(list, Arrays.asList(R1, R2, R3));*/
         List<Resume> testArray = storage.getAllSorted();
         assertEquals(3, testArray.size());
         assertEquals(R1, testArray.get(0));
@@ -138,6 +142,9 @@ public class AbstractStorageTest {
 
     @Test
     public void get() {
+        /*assertEquals(R1, storage.get(R1.getUuid()));
+        assertEquals(R2, storage.get(R2.getUuid()));
+        assertEquals(R3, storage.get(R3.getUuid()));*/
         assertEquals(R1, storage.get("uuid1"));
         assertEquals(3, storage.size());
     }

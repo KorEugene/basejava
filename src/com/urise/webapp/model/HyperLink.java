@@ -20,7 +20,7 @@ public class HyperLink implements Serializable {
     public HyperLink(String title, String url) {
         Objects.requireNonNull(title, "title must not be null");
         this.title = title;
-        this.url = url;
+        this.url = url == null ? "" : url;
     }
 
     public String getTitle() {
