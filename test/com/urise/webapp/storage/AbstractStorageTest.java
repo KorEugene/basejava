@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.Config;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.ContactType;
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AbstractStorageTest {
 
-    protected static final File STORAGE_DIR = new File("C:\\Users\\Master\\basejava\\storage");
+    protected static final File STORAGE_DIR = Config.getInstance().getStorageDir();
 
     protected Storage storage;
 
