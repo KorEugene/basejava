@@ -43,7 +43,7 @@ public class AbstractStorageTest {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-        R1.addContact(ContactType.E_MAIL, "mail1@ya.ru");
+        /*R1.addContact(ContactType.E_MAIL, "mail1@ya.ru");
         R1.addContact(ContactType.PHONE_NUMBER, "11111");
         R1.addSection(SectionType.PERSONAL, new StringSection("Personal data"));
         R1.addSection(SectionType.OBJECTIVE, new StringSection("Objective1"));
@@ -65,7 +65,7 @@ public class AbstractStorageTest {
         R1.addSection(SectionType.EXPERIENCE,
                 new OrganizationSection(
                         new Organization("Organization2", "http://Organization2.ru",
-                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));
+                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));*/
 
     }
 
