@@ -17,7 +17,9 @@ import org.junit.Test;
 import java.io.File;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,10 +29,10 @@ public class AbstractStorageTest {
 
     protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
+    private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final String UUID_3 = UUID.randomUUID().toString();
+    private static final String UUID_4 = UUID.randomUUID().toString();
 
     private static final Resume R1;
     private static final Resume R2;
@@ -100,7 +102,7 @@ public class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume r = new Resume("uuid1", "Employee");
+        Resume r = new Resume(UUID_1, "Employee");
         storage.update(r);
         assertEquals(r, storage.get(UUID_1));
         assertEquals(3, storage.size());
@@ -114,7 +116,7 @@ public class AbstractStorageTest {
 
     @Test
     public void delete() {
-        storage.delete("uuid3");
+        storage.delete(UUID_3);
         assertEquals(2, storage.size());
     }
 
@@ -125,14 +127,11 @@ public class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        /*List<Resume> list = storage.getAllSorted();
+        List<Resume> list = storage.getAllSorted();
         assertEquals(3, list.size());
-        assertEquals(list, Arrays.asList(R1, R2, R3));*/
-        List<Resume> testArray = storage.getAllSorted();
-        assertEquals(3, testArray.size());
-        assertEquals(R1, testArray.get(0));
-        assertEquals(R2, testArray.get(1));
-        assertEquals(R3, testArray.get(2));
+        List<Resume> sortedResumes = Arrays.asList(R1, R2, R3);
+        Collections.sort(sortedResumes);
+        assertEquals(list, sortedResumes);
     }
 
     @Test
@@ -143,11 +142,9 @@ public class AbstractStorageTest {
 
     @Test
     public void get() {
-        /*assertEquals(R1, storage.get(R1.getUuid()));
+        assertEquals(R1, storage.get(R1.getUuid()));
         assertEquals(R2, storage.get(R2.getUuid()));
-        assertEquals(R3, storage.get(R3.getUuid()));*/
-        assertEquals(R1, storage.get("uuid1"));
-        assertEquals(3, storage.size());
+        assertEquals(R3, storage.get(R3.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
