@@ -45,8 +45,11 @@ public class AbstractStorageTest {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-        /*R1.addContact(ContactType.E_MAIL, "mail1@ya.ru");
+        R1.addContact(ContactType.E_MAIL, "mail1@ya.ru");
         R1.addContact(ContactType.PHONE_NUMBER, "11111");
+        R4.addContact(ContactType.PHONE_NUMBER, "4444");
+        R4.addContact(ContactType.SKYPE, "Skype");
+        /*
         R1.addSection(SectionType.PERSONAL, new StringSection("Personal data"));
         R1.addSection(SectionType.OBJECTIVE, new StringSection("Objective1"));
         R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achievement11", "Achievement12", "Achievement13"));
@@ -103,6 +106,9 @@ public class AbstractStorageTest {
     @Test
     public void update() {
         Resume r = new Resume(UUID_1, "Employee");
+        R1.addContact(ContactType.E_MAIL, "mail@google.com");
+        R1.addContact(ContactType.SKYPE, "NewSkype");
+        R1.addContact(ContactType.PHONE_NUMBER, "+7 921 222-22-22");
         storage.update(r);
         assertEquals(r, storage.get(UUID_1));
         assertEquals(3, storage.size());
@@ -131,7 +137,7 @@ public class AbstractStorageTest {
         assertEquals(3, list.size());
         List<Resume> sortedResumes = Arrays.asList(R1, R2, R3);
         Collections.sort(sortedResumes);
-        assertEquals(list, sortedResumes);
+        assertEquals(sortedResumes, list);
     }
 
     @Test
