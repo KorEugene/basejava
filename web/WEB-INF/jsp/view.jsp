@@ -43,14 +43,14 @@
                 <c:choose>
                     <c:when test="${type=='PERSONAL'}">
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <%=((StringSection) section).getContent()%>
                             </td>
                         </tr>
                     </c:when>
                     <c:when test="${type=='QUALIFICATIONS' || type=='ACHIEVEMENT'}">
                         <tr>
-                            <td>
+                            <td colspan="2">
                                 <ul>
                                     <c:forEach var="item" items="<%=((ListSection)section).getElementsOfSection()%>">
                                         <li>${item}</li>
