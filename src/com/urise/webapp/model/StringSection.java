@@ -6,6 +6,8 @@ public class StringSection extends Section {
 
     private static final long serialVersionUID = 1L;
 
+    public static final StringSection EMPTY = new StringSection("");
+
     private String content;
 
     public StringSection() {
